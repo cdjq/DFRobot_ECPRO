@@ -22,7 +22,11 @@ I  = (1.24 / 10000)
 
 class dfrobot_ecpro(object):
 
+  def volCal(self,input):
+    return input
+
   def get_ec_us_cm(self,voltage,temperature):
+    voltage=self.volCal(voltage)
     ecvalueRaw = 100000 * voltage / RES2 / ECREF * _kvalue
     value = ecvalueRaw / (1.0 + 0.02 * (temperature - 25.0))
     return value
@@ -37,6 +41,7 @@ class dfrobot_ecpro(object):
 
 class dfrobot_ecpro_pt1000(object):     
   def conv_voltageto_temperature_c(self,voltage):
+    voltage=self.volCal(voltage)
     Rpt1000 = (voltage/GDIFF+VR0)/I/G0
     temp = (Rpt1000-1000)/3.85
     return temp
